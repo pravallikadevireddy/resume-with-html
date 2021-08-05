@@ -1,0 +1,88 @@
+Flask
+============
+pravalli.py
+----------------
+from flask import Flask,request,render_template
+app=Flask(__name__)
+@app.route('/')
+def hello():
+    return render_template("login.html")
+database={'Pravalli':'Devi','Manu':'1353'}
+@app.route('/form_login',methods=['POST','GET'])
+def login():
+    name1=request.form['Firstname']
+    name2=request.form['Lastname']
+    name3=request.form['email']
+    name4=request.form['Phoneno']
+    name5=request.form['Address']
+
+ 
+
+
+    if name1 not in database:
+        return render_template('login.html',info='Invalid name')
+    else:
+        if database[name1]!=name2:
+            return render_template('login.html', info='Invalid name')
+        else:
+            return render_template('home.html', fname=name1, lname=name2, email=name3, Phoneno=name4, Address=name5)
+
+ 
+
+
+if __name__=='__main__':
+    app.run(debug=True)
+===============================================================================================================================
+templates---- home.html
+-----------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body bgcolor="Pink">
+<br>
+<h1 align="center"><i>Resume</i></h1>
+<img src="https://cdn.vox-cdn.com/thumbor/gSn9GdgntR9JBcnU6Cr7NvaCPGQ=/148x0:1768x1080/1400x1400/filters:focal(148x0:1768x1080):format(jpeg)/cdn.vox-cdn.com/uploads/chorus_image/image/45905674/3042430-poster-p-1-hello-barbie-talking-toy-toytalk.0.0.jpg" alt="my image" width="400" height="550" border="5" align="right" />
+
+ 
+
+<h2 align="left">firstname: {{fname}}</h2>
+<h2 align="left">lastname: {{lname}}</h2>
+<h2 align="left">email: {{email}}</h2>
+<h2 align="left">phoneno: {{Phoneno}}</h2>
+<h2 align="left">address: {{Address}}</h2>
+
+ 
+
+</body>
+</html>
+=============================================================================================================================================================================
+login.html
+----------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body bgcolor="lightblue">
+<form action="/form_login" method="post">
+    <h1>Form</h1>
+    <h2></h2>firstname:<br>
+    <input type="text" name="firstname"><br>
+    Lastname:<br>
+    <input type="text" name="lastname"><br>
+    email:<br>
+    <input type="text" name="email"><br>
+    Phoneno:<br>
+    <input type="text" name="phoneno"><br>
+    Address:<br>
+    <input type="text" name="address"><br>
+    <input type="submit" value="login">
+</form>
+<h1>{{info}}</h1>
+</body>
+</html>
+
